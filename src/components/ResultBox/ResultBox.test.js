@@ -17,7 +17,7 @@ describe('Component ResultBox', () => {
         for(const testObj of testCases) {
 
          //render component
-         render(<ResultBox from="PLN" to="USD" amount={testObj.amount} />)
+         render(<ResultBox from="PLN" to="USD" amount={testObj.amount} />);
 
          //find main div
          const output = screen.getByTestId('output');
@@ -27,6 +27,21 @@ describe('Component ResultBox', () => {
 
          //unmount component
          cleanup();
+        }
+    });
+    it('should render proper info about conversion when USD -> PLN', () => {
+        const testCases = [
+            { amount: 100, expected: '$100.00 = PLN 350.00' },
+            { amount: 350, expected: '$350.00 = PLN 1,225.00' },
+            { amount: 50, expected: '$50.00 = PLN 175.00' },
+            { amount: 0, expected: '$0.00 = PLN 0.00' },
+        ];
+
+        for(const testObj of testCases) {
+            render(<ResultBox from="USD" to="PLN" amount={testObj.amount} />);
+            const output = screen.getByTestId('output');
+            expect(output).toHaveTextContent(testObj.expected);
+            cleanup();
         }
     });
 });
