@@ -44,4 +44,16 @@ describe('Component ResultBox', () => {
             cleanup();
         }
     });
+    it('should render the same value when PLN -> PLN and USD -> USD', () => {
+        const testCases = [
+            { amount: 100, currency: 'PLN', expected: 'PLN 100.00 = PLN 100.00' },
+            { amount: 222, currency: 'USD', expected: '$222.00 = $222.00' },
+        ];
+        for(const {currency, amount, expected} of testCases) {
+            render(<ResultBox from={currency} to={currency} amount={amount} />);
+            const output = screen.getByTestId('output');
+            expect(output).toHaveTextContent(expected);
+            cleanup();
+        }
+    });
 });
