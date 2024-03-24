@@ -56,4 +56,18 @@ describe('Component ResultBox', () => {
             cleanup();
         }
     });
+    it('should return string "Wrong value.." when value is a number less than zero', () => {
+        const testCases = [
+            { amount: -100 },
+            { amount: -0.5 },
+            { amount: -53 },
+            { amount: -1200 },
+        ];
+        for(const testObj of testCases) {
+            render(<ResultBox from="PLN" to="USD" amount={testObj.amount} />);
+            const output = screen.getByTestId('output');
+            expect(output).toHaveTextContent("Wrong value...");
+            cleanup();
+        }
+    });
 });
